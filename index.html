@@ -11,7 +11,7 @@
       --fz-1:12px; --fz-2:13px; --fz-3:14px; --fz-4:16px; --fz-5:18px; --fz-6:22px;
       --ink:#222; --muted:#6b7280; --line:#e5e7eb;
       --bg:#f8fafc; --card:#ffffff;
-      --pri:#2149a6; --accent:#6b64ff; --warn:#ffb400; --info:#7f9fcb;
+      --pri:#2149a6; --accent:#6b64ff; --info:#7f9fcb;
       --done:#eef; --edit:#fff6e0; --work:#edf3ff;
       --radius:12px; --shadow:0 6px 20px rgba(0,0,0,.08);
     }
@@ -78,12 +78,13 @@
       <button class="btn" data-action="preview" aria-pressed="true">미리보기 ON</button>
     </div>
 
+    <!-- 공통 -->
     <section class="section" id="s-common" data-code="">
       <h2>공통 및 샘플<span class="badge">COMMON</span></h2>
       <table class="grid js-pub">
         <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr><td></td><td>가이드</td><td></td><td>마크업 가이드</td><td>../../</td><td><a href="#">guide</a></td><td></td><td></td></tr>
+          <tr><td></td><td>가이드</td><td></td><td>마크업 가이드</td><td></td><td><a href="#">guide</a></td><td></td><td></td></tr>
           <tr><td></td><td>util</td><td></td><td>PX to EM Converter</td><td>CM/util</td><td><a href="#">px_converter</a></td><td></td><td></td></tr>
           <tr><td></td><td>util</td><td></td><td>변수 COPY</td><td>CM/util</td><td><a href="#">copy</a></td><td></td><td></td></tr>
           <tr><td></td><td>sample</td><td></td><td>팝업 샘플</td><td>CM/sample</td><td><a href="#">_popup</a></td><td></td><td></td></tr>
@@ -97,6 +98,7 @@
       </table>
     </section>
 
+    <!-- 메인 -->
     <section class="section" id="s-main" data-code="MAIN">
       <h2>메인<span class="badge">MAIN</span></h2>
       <table class="grid js-pub js-count">
@@ -111,29 +113,41 @@
   </main>
 </div>
 
+<!-- title → 화면 h1 동기화 -->
 <script>
-(function syncHeadingWithTitle(){
-  var h1 = document.querySelector('header h1');
-  if (!h1) return;
-  var text = document.title.split('·')[0].trim();
-  h1.textContent = text;
+(function(){
+  var h1=document.querySelector('header h1');
+  if(!h1) return;
+  h1.textContent=(document.title.split('·')[0]||'').trim()||'AML Solution 작업 리스트';
 })();
 </script>
 
+<!-- 모듈 임포트 (v=6 로 캐시 무력화) -->
 <script type="module">
-  import { configureTables, toggleMerge, setPreviewEnabled } from './js/app.table.js?v=4';
-  import { initToolbar, initSideNav } from './js/app.common.js?v=4';
-  import { installHoverPreview } from './js/app.preview.js?v=4';
+  import { configureTables, toggleMerge, setPreviewEnabled } from './js/app.table.js?v=6';
+  import { initToolbar, initSideNav } from './js/app.common.js?v=6';
+  import { installHoverPreview } from './js/app.preview.js?v=6';
 
   initSideNav();
   configureTables();
-  installHoverPreview({ selector: '.js-pub a', width: 1440, height: 720, scale: 0.85, offsetX: 50, offsetY: -100 });
+
+  installHoverPreview({
+    selector: '.js-pub a',
+    width: 1440, height: 720,
+    scale: 0.85, offsetX: 50, offsetY: -100
+  });
+
   initToolbar({
     onToggleMerge: toggleMerge,
     onTogglePreview: (pressed) => setPreviewEnabled(pressed),
   });
+
   document.addEventListener('tables:rebuilt', () => {
-    installHoverPreview({ selector: '.js-pub a', width: 1440, height: 720, scale: 0.85, offsetX: 50, offsetY: -100 });
+    installHoverPreview({
+      selector: '.js-pub a',
+      width: 1440, height: 720,
+      scale: 0.85, offsetX: 50, offsetY: -100
+    });
   });
 </script>
 </body>
