@@ -1,8 +1,11 @@
+// js/app.common.js
 export function initToolbar({ onToggleMerge, onTogglePreview }) {
   const toolbar = document.querySelector('.toolbar');
   if (!toolbar) return;
+
   const mergeBtn = toolbar.querySelector('[data-action="merge"]');
   const previewBtn = toolbar.querySelector('[data-action="preview"]');
+
   if (mergeBtn) mergeBtn.addEventListener('click', () => onToggleMerge());
   if (previewBtn) {
     previewBtn.addEventListener('click', () => {
@@ -12,6 +15,7 @@ export function initToolbar({ onToggleMerge, onTogglePreview }) {
     });
   }
 }
+
 export function initSideNav() {
   const nav = document.getElementById('sideNav');
   if (!nav) return;
