@@ -1,30 +1,20 @@
-// js/app.common.js
-export function initToolbar({ onToggleMerge, onTogglePreview }) {
-  const toolbar = document.querySelector('.toolbar');
-  if (!toolbar) return;
+// js/app.common.js v9
 
-  const mergeBtn = toolbar.querySelector('[data-action="merge"]');
-  const previewBtn = toolbar.querySelector('[data-action="preview"]');
+// 툴바(토글 버튼) 초기화
+export function initToolbar({ onToggleMerge, onTogglePreview }){
+  const wrap = document.querySelector('.toolbar');
+  if (!wrap) return;
 
-  if (mergeBtn) mergeBtn.addEventListener('click', () => onToggleMerge());
-  if (previewBtn) {
-    previewBtn.addEventListener('click', () => {
-      const next = previewBtn.getAttribute('aria-pressed') !== 'true';
-      previewBtn.setAttribute('aria-pressed', String(next));
-      onTogglePreview(next);
-    });
-  }
-}
+  const mergeBtn   = wrap.querySelector('[data-action="merge"]');
+  const previewBtn = wrap.querySelector('[data-action="preview"]');
 
-export function initSideNav() {
-  const nav = document.getElementById('sideNav');
-  if (!nav) return;
-  const items = Array.from(nav.querySelectorAll('a'));
-  const mark = () => {
-    const hash = location.hash || '#s-common';
-    items.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
-  };
-  window.addEventListener('hashchange', mark);
-  if (!location.hash) history.replaceState(null, '', '#s-common');
-  mark();
+  mergeBtn?.addEventListener('click', () => {
+    onToggleMerge?.();
+  });
+
+  previewBtn?.addEventListener('click', () => {
+    const pressed = previewBtn.getAttribute('aria-pressed') === 'true' ? 'false' : 'true';
+    previewBtn.setAttribute('aria-pressed', pressed);
+    onTogglePreview?.(pressed === 'true');
+  });
 }
