@@ -1,5 +1,5 @@
 // js/app.preview.js
-import { isPreviewEnabled } from './app.table.js?v=7';
+import { isPreviewEnabled } from './app.table.js?v=8';
 
 const existCache = new Map(); // href -> Promise<boolean>
 
@@ -17,7 +17,7 @@ export function installHoverPreview({ selector, width, height, scale, offsetX, o
     a.addEventListener('mouseenter', async e=>{
       if(!isPreviewEnabled()) return;
 
-      // 파일 존재 체크(없으면 미리보기 띄우지 않음)
+      // 파일이 없으면 미리보기 띄우지 않음(404 스팸 방지)
       if (!(await exists(a.href))) return;
 
       const f = ensure();
@@ -36,11 +36,18 @@ export function installHoverPreview({ selector, width, height, scale, offsetX, o
       pos(f, e.pageX, e.pageY, {width,height,scale,offsetX,offsetY});
     });
 
-    a.addEventListener('mouseleave', ()=>{
-      const f = document.getElementById('hoverPreview');
-      if (f) f.hidden = true;
-    });
+    a.addEventListener('mouseleave', hidePreview);
   });
+
+  // 스크롤/휠/창 전환 시 자동 숨김 → 상호작용 방해 방지
+  window.addEventListener('scroll', hidePreview, { passive:true });
+  window.addEventListener('wheel', hidePreview, { passive:true });
+  window.addEventListener('blur', hidePreview);
+}
+
+function hidePreview(){
+  const f = document.getElementById('hoverPreview');
+  if (f) f.hidden = true;
 }
 
 function ensure(){
