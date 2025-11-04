@@ -58,12 +58,12 @@ function buildLinks(tbl){
 export function computeHref(secCode, path, base){
   const p = (path || '').trim();
 
-  // 1) 절대/외부 링크면 그대로
+  // 절대/외부 링크면 그대로
   if (/^(https?:)?\/\//.test(p)) {
     return p.replace(/\/+$/, '') + '/' + base + '.html';
   }
 
-  // 2) ../../, ./, / 같은 상대/루트 표기 정리
+  // ../../, ./, / 같은 상대/루트 표기 정리
   const cleaned = p
     .replace(/^\.\.\/\.\.\//, '')  // "../../" 제거
     .replace(/^\.\/+/, '')         // "./" 제거
