@@ -1,1 +1,0 @@
-See Settings → Pages. Use page/…/*.html for preview targets.
