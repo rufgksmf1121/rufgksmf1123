@@ -220,11 +220,11 @@
 </div>
 
 <script type="module">
-  import {configureTables, toggleMerge, setPreviewEnabled, initSideNav} from './js/app.table.js';
-  import {initToolbar} from './js/app.common.js';
-  import {installHoverPreview} from './js/app.preview.js';
+  import { configureTables, toggleMerge, setPreviewEnabled } from './js/app.table.js';
+  import { initToolbar, initSideNav } from './js/app.common.js';
+  import { installHoverPreview } from './js/app.preview.js';
 
-  // 초기화 순서 (의도 드러나게 작성)
+  // 초기화
   initSideNav();
   configureTables();
   installHoverPreview({ selector: '.js-pub a', width: 1440, height: 720, scale: 0.85, offsetX: 50, offsetY: -100 });
@@ -232,7 +232,13 @@
     onToggleMerge: toggleMerge,
     onTogglePreview: (pressed) => setPreviewEnabled(pressed),
   });
+
+  // 병합 토글로 표가 재구성되면 프리뷰 리스너 재부착
+  document.addEventListener('tables:rebuilt', () => {
+    installHoverPreview({ selector: '.js-pub a', width: 1440, height: 720, scale: 0.85, offsetX: 50, offsetY: -100 });
+  });
 </script>
+
 
 </body>
 </html>
