@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>AML Solution 작업 리스트 · Rebuilt (KYH-style)</title>
+  <style>
+    body{margin:0; font-family:system-ui,Apple SD Gothic Neo,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:#f7f9fc;}
+    .wrap{display:flex; min-height:100vh;}
+    aside{width:220px; background:#0e1a2a; color:#aaccff; padding:16px; position:sticky; top:0; height:100vh; overflow:auto;}
+    aside h2{color:#fff; font-size:18px; margin:0 0 12px;}
+    aside a{display:block; padding:10px 12px; margin:8px 0; border-radius:10px; text-decoration:none; color:#cfe2ff; background:#13233a;}
+    aside a.active, aside a:hover{background:#1b2c49; color:#fff;}
+    main{flex:1; padding:24px;}
+    .toolbar{display:flex; gap:8px; margin:6px 0 16px;}
+    .toolbar button{border:1px solid #cfe; background:#fff; padding:8px 12px; border-radius:10px; cursor:pointer;}
+    .toolbar button.is-on{background:#2149a6; color:#fff; border-color:#2149a6;}
+    h1{margin:0 0 10px; color:#1b2c49;}
+    .section h2{margin:32px 0 10px; color:#1b2c49;}
+    table{width:100%; border-collapse:collapse; background:#fff;}
+    th,td{border:1px solid #e5eaf2; padding:10px; text-align:center; font-size:14px;}
+    thead th{background:#eef3ff; color:#2149a6;}
+    .js-pub a{color:#2149a6; text-decoration:underline;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside>
+      <h2>섹션</h2>
+      <nav id="sideNav">
+        <a href="#common">공통</a>
+        <a href="#main">메인</a>
+        <a href="#std">기준정보(STD)</a>
+        <a href="#law">법령(LAW)</a>
+        <a href="#int">내규(INT)</a>
+        <a href="#obl">책무(OBL)</a>
+        <a href="#cmp">이행점검(CMP)</a>
+        <a href="#apr">결재(APR)</a>
+      </nav>
+    </aside>
+    <main>
+      <h1>AML 솔루션 작업 리스트</h1>
+      <div class="toolbar">
+        <button id="btnMerge" type="button">열 병합 토글</button>
+        <button id="btnPreview" type="button" aria-pressed="true" class="is-on">미리보기 ON</button>
+      </div>
+
+      <section class="section" id="common" data-code="CM">
+        <h2>공통 및 샘플 <span style="font-size:12px;color:#7b8; background:#eef; padding:2px 6px; border-radius:999px;">COMMON</span></h2>
+        <table class="grid js-count js-pub" data-merge="off">
+          <thead><tr>
+            <th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th>
+          </tr></thead>
+          <tbody>
+            <tr><td></td><td>sample</td><td></td><td>sample1</td><td>sample</td><td><a href="javascript:void(0);">sample1</a></td><td></td><td></td></tr>
+            <tr><td></td><td>sample</td><td></td><td>sample2</td><td>sample</td><td><a href="javascript:void(0);">sample2</a></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="main" data-code="MAIN">
+        <h2>메인 <span style="font-size:12px;color:#7b8; background:#eef; padding:2px 6px; border-radius:999px;">MAIN</span></h2>
+        <table class="grid js-count js-pub" data-merge="off">
+          <thead><tr>
+            <th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th>
+          </tr></thead>
+          <tbody>
+            <tr><td></td><td>sample</td><td></td><td>sample3</td><td>sample</td><td><a href="javascript:void(0);">sample3</a></td><td></td><td></td></tr>
+            <tr><td></td><td>sample</td><td></td><td>sample4</td><td>sample</td><td><a href="javascript:void(0);">sample4</a></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="std" data-code="DT">
+        <h2>기준정보관리 <span style="font-size:12px;color:#7b8; background:#eef; padding:2px 6px; border-radius:999px;">STD</span></h2>
+        <table class="grid js-count js-pub" data-merge="off">
+          <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+          <tbody>
+            <tr><td></td><td>sample</td><td></td><td>sample1</td><td>sample</td><td><a>sample1</a></td><td></td><td></td></tr>
+            <tr><td></td><td>sample</td><td></td><td>sample2</td><td>sample</td><td><a>sample2</a></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="law" data-code="LG">
+        <h2>법령관리 <span style="font-size:12px;color:#7b8; background:#eef; padding:2px 6px; border-radius:999px;">LAW</span></h2>
+        <table class="grid js-count js-pub" data-merge="off">
+          <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+          <tbody>
+            <tr><td></td><td>sample</td><td></td><td>sample1</td><td>sample</td><td><a>sample1</a></td><td></td><td></td></tr>
+            <tr><td></td><td>sample</td><td></td><td>sample2</td><td>sample</td><td><a>sample2</a></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="int" data-code="CN">
+        <h2>기업내규관리 <span style="font-size:12px;color:#7b8; background:#eef; padding:2px 6px; border-radius:999px;">INT</span></h2>
+        <table class="grid js-count js-pub" data-merge="off">
+          <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+          <tbody>
+            <tr><td></td><td>sample</td><td></td><td>sample1</td><td>sample</td><td><a>sample1</a></td><td></td><td></td></tr>
+            <tr><td></td><td>sample</td><td></td><td>sample2</td><td>sample</td><td><a>sample2</a></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="obl" data-code="DS">
+        <h2>책무정보관리 <span style="font-size:12px;color:#7b8; background:#eef; padding:2px 6px; border-radius:999px;">OBL</span></h2>
+        <table class="grid js-count js-pub" data-merge="off">
+          <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+          <tbody>
+            <tr><td></td><td>sample</td><td></td><td>sample1</td><td>sample</td><td><a>sample1</a></td><td></td><td></td></tr>
+            <tr><td></td><td>sample</td><td></td><td>sample2</td><td>sample</td><td><a>sample2</a></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="cmp" data-code="CMP">
+        <h2>이행점검관리 <span style="font-size:12px;color:#7b8; background:#eef; padding:2px 6px; border-radius:999px;">CMP</span></h2>
+        <table class="grid js-count js-pub" data-merge="off">
+          <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+          <tbody>
+            <tr><td></td><td>sample</td><td></td><td>sample1</td><td>sample</td><td><a>sample1</a></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="apr" data-code="APR">
+        <h2>결재관리 <span style="font-size:12px;color:#7b8; background:#eef; padding:2px 6px; border-radius:999px;">APR</span></h2>
+        <table class="grid js-count js-pub" data-merge="off">
+          <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+          <tbody>
+            <tr><td></td><td>sample</td><td></td><td>sample1</td><td>sample</td><td><a>sample1</a></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { configureTables, toggleMerge, setPreviewEnabled, initSideNav } from './js/app.table.js';
+    import { initToolbar } from './js/app.common.js';
+    import { installHoverPreview } from './js/app.preview.js';
+
+    initSideNav();
+    configureTables();
+    installHoverPreview({ selector: '.js-pub a', width: 1440, height: 720, scale: 0.85, offsetX: 50, offsetY: -100 });
+    initToolbar({
+      onToggleMerge: toggleMerge,
+      onTogglePreview: (pressed)=> setPreviewEnabled(pressed),
+    });
+    document.addEventListener('tables:rebuilt', ()=>{
+      installHoverPreview({ selector: '.js-pub a', width: 1440, height: 720, scale: 0.85, offsetX: 50, offsetY: -100 });
+    });
+  </script>
+</body>
+</html>
