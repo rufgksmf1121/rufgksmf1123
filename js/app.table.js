@@ -38,9 +38,18 @@ export function configureTables(){
   const done = countRows.filter(tr => tr.classList.contains('row-done') || tr.classList.contains('row-edit')).length;
   const total = countRows.filter(tr => !tr.classList.contains('row-muted') && !tr.classList.contains('row-hold')).length;
   const percent = total ? ((done / total) * 100).toFixed(2) : '0.00';
-  document.getElementById('done')?.textContent = done;
-  document.getElementById('total')?.textContent = total;
-  document.getElementById('percent')?.textContent = `${percent}%`;
+
+  // ▼ 여기만 안전하게 변경
+  const doneEl = document.getElementById('done');
+  if (doneEl) doneEl.textContent = String(done);
+
+  const totalEl = document.getElementById('total');
+  if (totalEl) totalEl.textContent = String(total);
+
+  const percentEl = document.getElementById('percent');
+  if (percentEl) percentEl.textContent = `${percent}%`;
+  // ▲ 변경 끝
+
   document.dispatchEvent(new CustomEvent('tables:rebuilt'));
 }
 
