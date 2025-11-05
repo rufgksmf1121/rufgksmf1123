@@ -1,350 +1,164 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AML Solution 작업 리스트</title>
-  <!-- 원본 CSS/라이브러리 그대로 두세요 -->
-  <link rel="stylesheet" href="./css/style.css" />
-  <script type="module" src="./js/main.js"></script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AML Solution 작업 리스트 · Rebuilt (KYH-style)</title>
+  <style>
+    :root{--page-min:1280px;--line:#e5e7eb;--bg:#f6f8fc;--pri:#2149a6}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans KR"}
+    a{color:#0b51d0;text-decoration:underline} a:visited{color:#6b64ff}
+    .layout{display:grid;grid-template-columns:240px 1fr;grid-template-rows:auto 1fr;min-height:100vh;min-width:var(--page-min)}
+    header{grid-column:1/3;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:var(--bg);position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line)}
+    header h1{margin:0;font-size:22px;color:var(--pri)}
+    aside{padding:18px;background:#0f172a;color:#cbd5e1}
+    .nav{display:flex;flex-direction:column;gap:8px;position:sticky;top:74px}
+    .nav a{display:block;padding:10px 12px;border-radius:10px;text-decoration:none;border:1px solid rgba(148,163,184,.25);color:#cbd5e1}
+    .nav a.active,.nav a:focus-visible{background:#111827;color:#fff;border-color:#334155;outline:none}
+    main{padding:24px}
+    .section{margin-top:32px;scroll-margin-top:92px}
+    .badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;margin-left:6px}
+    .toolbar{display:flex;gap:10px;margin-bottom:14px}
+    .btn{padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer}
+    .btn[aria-pressed="true"]{background:#111827;color:#fff;border-color:#111827}
+    table.grid{width:100%;border-collapse:collapse;table-layout:fixed;border:1px solid var(--line);background:#fff}
+    .grid th,.grid td{border-left:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 12px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .grid thead th{background:#f1f5f9;color:#2149a6;font-weight:800}
+    .grid tbody tr{counter-increment:row}
+    .grid tbody td:first-child::before{content:counter(row) ". "}
+    .grid tbody td:nth-last-child(2){text-align:left}
+    iframe.preview{position:absolute;z-index:9999;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);pointer-events:none}
+  </style>
 </head>
 <body>
-
-  <!-- 상단 헤더/타이틀 (원본 구조 유지, 텍스트만 교체) -->
-  <header class="page-header">
-    <h1 class="page-title">AML Solution 작업 리스트</h1>
-    <div class="page-meta">
-      <span>최신화 날짜: <strong id="lastUpdated">2025-10-31</strong></span>
-      <div class="toolbar">
-        <!-- ✅ 열 병합 토글 버튼 삭제, 그 자리에 미리보기 버튼 -->
-        <button id="btnPreview" type="button">미리보기 ON</button>
-      </div>
-    </div>
+<div class="layout">
+  <header>
+    <h1>AML Solution 작업 리스트</h1>
+    <div>최신화: <b>2025-11-05</b> · 진행 <span id="total">0</span>/<span id="done">0</span> = <span id="percent">0%</span></div>
   </header>
-
-  <!-- 좌측 사이드(원본 구조/스타일 유지) -->
-  <aside id="sideNav" class="side-nav">
-    <nav>
-      <a href="#sec-common">공통</a>
-      <a href="#sec-main">메인</a>
-      <a href="#sec-std">기준정보(STD)</a>
-      <a href="#sec-law">법령(LAW)</a>
-      <a href="#sec-int">내규(INT)</a>
-      <a href="#sec-obl">책무(OBL)</a>
-      <a href="#sec-cmp">이행점검(CMP)</a>
-      <a href="#sec-apr">결재(APR)</a>
+  <aside>
+    <p>섹션</p>
+    <nav class="nav" id="sideNav">
+      <a href="#s-common">공통</a>
+      <a href="#s-main">메인</a>
+      <a href="#s-std">기준정보(STD)</a>
+      <a href="#s-law">법령(LAW)</a>
+      <a href="#s-int">내규(INT)</a>
+      <a href="#s-obl">책무(OBL)</a>
+      <a href="#s-cmp">이행점검(CMP)</a>
+      <a href="#s-apr">결재(APR)</a>
     </nav>
   </aside>
-
   <main>
-    <!-- 1) 공통 -->
-    <section id="sec-common" class="section js-count" data-code="CM">
-      <h2>공통 및 샘플 <small>COMMON</small></h2>
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>2Depth</th>
-            <th>3Depth</th>
-            <th>화면명</th>
-            <th>path</th>
-            <th>URL</th>
-            <th>비고</th>
-            <th>상태</th>
-          </tr>
-        </thead>
+    <div class="toolbar" role="group" aria-label="보기 옵션">
+      <!-- 열 병합 토글 제거 → 그 자리에 미리보기 버튼만 유지 -->
+      <button class="btn" data-action="preview" id="btnPreview" aria-pressed="true">미리보기 ON</button>
+    </div>
+
+    <!-- 1) COMMON: sample1, sample2 (path = CM/sample) -->
+    <section class="section" id="s-common" data-code="">
+      <h2>공통 및 샘플 <span class="badge">COMMON</span></h2>
+      <table class="grid js-pub">
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 1</td>
-            <td>sample</td>
-            <td><a>sample1</a></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>2.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 2</td>
-            <td>sample</td>
-            <td><a>sample2</a></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 1</td><td>CM/sample</td><td><a href="#">sample1</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 2</td><td>CM/sample</td><td><a href="#">sample2</a></td><td></td><td></td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 2) 메인 -->
-    <section id="sec-main" class="section" data-code="MAIN">
-      <h2>메인 <small>MAIN</small></h2>
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>2Depth</th>
-            <th>3Depth</th>
-            <th>화면명</th>
-            <th>path</th>
-            <th>URL</th>
-            <th>비고</th>
-            <th>상태</th>
-          </tr>
-        </thead>
+    <!-- 2) MAIN: sample3, sample4 (path = 빈칸) -->
+    <section class="section" id="s-main" data-code="MAIN">
+      <h2>메인 <span class="badge">MAIN</span></h2>
+      <table class="grid js-pub js-count">
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 3</td>
-            <td></td>
-            <td><a>sample3</a></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>2.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 4</td>
-            <td></td>
-            <td><a>sample4</a></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 3</td><td></td><td><a href="#">sample3</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 4</td><td></td><td><a href="#">sample4</a></td><td></td><td></td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 3) 기준정보 STD/DT -->
-    <section id="sec-std" class="section" data-code="STD">
-      <h2>기준정보관리 <small>STD</small></h2>
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>2Depth</th>
-            <th>3Depth</th>
-            <th>화면명</th>
-            <th>path</th>
-            <th>URL</th>
-            <th>비고</th>
-            <th>상태</th>
-          </tr>
-        </thead>
+    <!-- 3) STD/DT: sample5, sample6 (path = DT) -->
+    <section class="section" id="s-std" data-code="STD">
+      <h2>기준정보관리 <span class="badge">STD</span></h2>
+      <table class="grid js-pub js-count">
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 5</td>
-            <td>DT</td>
-            <td><a>sample5</a></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>2.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 6</td>
-            <td>DT</td>
-            <td><a>sample6</a></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 5</td><td>DT</td><td><a href="#">sample5</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 6</td><td>DT</td><td><a href="#">sample6</a></td><td></td><td></td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 4) 법령 LAW/LG -->
-    <section id="sec-law" class="section" data-code="LAW">
-      <h2>법령관리 <small>LAW</small></h2>
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>2Depth</th>
-            <th>3Depth</th>
-            <th>화면명</th>
-            <th>path</th>
-            <th>URL</th>
-            <th>비고</th>
-            <th>상태</th>
-          </tr>
-        </thead>
+    <!-- 4) LAW/LG: sample7, sample8 (path = LG) -->
+    <section class="section" id="s-law" data-code="LAW">
+      <h2>법령관리 <span class="badge">LAW</span></h2>
+      <table class="grid js-pub js-count">
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 7</td>
-            <td>LG</td>
-            <td><a>sample7</a></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>2.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 8</td>
-            <td>LG</td>
-            <td><a>sample8</a></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 7</td><td>LG</td><td><a href="#">sample7</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 8</td><td>LG</td><td><a href="#">sample8</a></td><td></td><td></td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 5) 내규 INT/CN -->
-    <section id="sec-int" class="section" data-code="INT">
-      <h2>기업내규관리 <small>INT</small></h2>
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>2Depth</th>
-            <th>3Depth</th>
-            <th>화면명</th>
-            <th>path</th>
-            <th>URL</th>
-            <th>비고</th>
-            <th>상태</th>
-          </tr>
-        </thead>
+    <!-- 5) INT/CN: sample9, sample10 (path = CN) -->
+    <section class="section" id="s-int" data-code="INT">
+      <h2>기업내규관리 <span class="badge">INT</span></h2>
+      <table class="grid js-pub js-count">
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 9</td>
-            <td>CN</td>
-            <td><a>sample9</a></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>2.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 10</td>
-            <td>CN</td>
-            <td><a>sample10</a></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 9</td><td>CN</td><td><a href="#">sample9</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 10</td><td>CN</td><td><a href="#">sample10</a></td><td></td><td></td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 6) 책무 OBL/DS -->
-    <section id="sec-obl" class="section" data-code="OBL">
-      <h2>책무정보관리 <small>OBL</small></h2>
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>2Depth</th>
-            <th>3Depth</th>
-            <th>화면명</th>
-            <th>path</th>
-            <th>URL</th>
-            <th>비고</th>
-            <th>상태</th>
-          </tr>
-        </thead>
+    <!-- 6) OBL/DS: sample11, sample12 (path = DS) -->
+    <section class="section" id="s-obl" data-code="OBL">
+      <h2>책무정보관리 <span class="badge">OBL</span></h2>
+      <table class="grid js-pub js-count">
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 11</td>
-            <td>DS</td>
-            <td><a>sample11</a></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>2.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 12</td>
-            <td>DS</td>
-            <td><a>sample12</a></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 11</td><td>DS</td><td><a href="#">sample11</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 12</td><td>DS</td><td><a href="#">sample12</a></td><td></td><td></td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 7) 이행점검 CMP (1개만) -->
-    <section id="sec-cmp" class="section" data-code="CMP">
-      <h2>이행점검관리 <small>CMP</small></h2>
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>2Depth</th>
-            <th>3Depth</th>
-            <th>화면명</th>
-            <th>path</th>
-            <th>URL</th>
-            <th>비고</th>
-            <th>상태</th>
-          </tr>
-        </thead>
+    <!-- 7) CMP: sample13 (path = 빈칸) -->
+    <section class="section" id="s-cmp" data-code="CMP">
+      <h2>이행점검관리 <span class="badge">CMP</span></h2>
+      <table class="grid js-pub js-count">
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 13</td>
-            <td></td>
-            <td><a>sample13</a></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 13</td><td></td><td><a href="#">sample13</a></td><td></td><td></td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 8) 결재 APR (1개만) -->
-    <section id="sec-apr" class="section" data-code="APR">
-      <h2>결재관리 <small>APR</small></h2>
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>2Depth</th>
-            <th>3Depth</th>
-            <th>화면명</th>
-            <th>path</th>
-            <th>URL</th>
-            <th>비고</th>
-            <th>상태</th>
-          </tr>
-        </thead>
+    <!-- 8) APR: sample14 (path = 빈칸) -->
+    <section class="section" id="s-apr" data-code="APR">
+      <h2>결재관리 <span class="badge">APR</span></h2>
+      <table class="grid js-pub js-count">
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1.</td>
-            <td>sample</td>
-            <td></td>
-            <td>sample 14</td>
-            <td></td>
-            <td><a>sample14</a></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tr><td></td><td>sample</td><td></td><td>sample 14</td><td></td><td><a href="#">sample14</a></td><td></td><td></td></tr>
         </tbody>
       </table>
     </section>
   </main>
-
+</div>
+<script>
+  (function(){
+    var h1=document.querySelector('header h1');
+    if(h1){
+      var t=document.title.split('·')[0]||'';
+      h1.textContent=(t||'').trim()||'AML Solution 작업 리스트';
+    }
+  })();
+</script>
+<script type="module" src="./js/main.js"></script>
 </body>
 </html>
