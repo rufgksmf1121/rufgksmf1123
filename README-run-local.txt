@@ -1,0 +1,1 @@
+루트에 index.html, js/*, page/* 업로드 → GitHub Pages root로 서비스.
