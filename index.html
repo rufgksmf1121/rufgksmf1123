@@ -18,7 +18,7 @@
     main{padding:24px}
     .section{margin-top:32px;scroll-margin-top:92px}
     .badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;margin-left:6px}
-    .toolbar{display:flex;gap:10px;margin-bottom:14px}
+    .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
     .btn{padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer}
     .btn[aria-pressed="true"]{background:#111827;color:#fff;border-color:#111827}
     table.grid{width:100%;border-collapse:collapse;table-layout:fixed;border:1px solid var(--line);background:#fff}
@@ -34,7 +34,7 @@
 <div class="layout">
   <header>
     <h1>AML Solution 작업 리스트</h1>
-    <div>최신화: <b>2025-11-05</b> · 진행 <span id="total">0</span>/<span id="done">0</span> = <span id="percent">0%</span></div>
+    <div>최신화 날짜: <b>2025-11-05</b> · 진행 <span id="total">0</span>/<span id="done">0</span> = <span id="percent">0%</span></div>
   </header>
   <aside>
     <p>섹션</p>
@@ -51,8 +51,18 @@
   </aside>
   <main>
     <div class="toolbar" role="group" aria-label="보기 옵션">
-      <!-- 열 병합 토글 버튼 제거 -->
+      <!-- 열 병합 토글 버튼 제거된 상태 -->
       <button class="btn" data-action="preview" aria-pressed="true">미리보기 ON</button>
+
+      <!-- 상태 버튼들: 인라인 스타일만 추가(스타일시트는 수정하지 않음) -->
+      <button class="btn" data-status="planned"
+              style="background:#87A2C5;color:#fff;border-color:#87A2C5">작업예정</button>
+      <button class="btn" data-status="onhold"
+              style="background:#E6E6FA;color:#111;border-color:#E6E6FA">보류</button>
+      <button class="btn" data-status="done"
+              style="background:#6A6CF7;color:#fff;border-color:#6A6CF7">완료</button>
+      <button class="btn" data-status="edit"
+              style="background:#FFB81C;color:#111;border-color:#FFB81C">수정</button>
     </div>
 
     <section class="section" id="s-common" data-code="">
@@ -145,7 +155,13 @@
   </main>
 </div>
 <script>
-  (function(){var h1=document.querySelector('header h1');if(h1){var t=document.title.split('·')[0]||'';h1.textContent=(t||'').trim()||'AML Solution 작업 리스트';}})();
+  (function(){
+    var h1=document.querySelector('header h1');
+    if(h1){
+      var t=document.title.split('·')[0]||'';
+      h1.textContent=(t||'').trim()||'AML Solution 작업 리스트';
+    }
+  })();
 </script>
 <script type="module" src="./js/main.js"></script>
 </body>
