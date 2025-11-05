@@ -1,10 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>AML Solution 작업 리스트 · Rebuilt (KYH-style)</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>AML Solution 작업 리스트 · Rebuilt (KYH-style)</title>
+<style>
     :root{--page-min:1280px;--line:#e5e7eb;--bg:#f6f8fc;--pri:#2149a6}
     *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans KR"}
     a{color:#0b51d0;text-decoration:underline} a:visited{color:#6b64ff}
@@ -32,133 +33,144 @@
 </head>
 <body>
 <div class="layout">
-  <header>
-    <h1>AML Solution 작업 리스트</h1>
-    <div>최신화: <b>2025-11-05</b> · 진행 <span id="total">0</span>/<span id="done">0</span> = <span id="percent">0%</span></div>
-  </header>
-  <aside>
-    <p>섹션</p>
-    <nav class="nav" id="sideNav">
-      <a href="#s-common">공통</a>
-      <a href="#s-main">메인</a>
-      <a href="#s-std">기준정보(STD)</a>
-      <a href="#s-law">법령(LAW)</a>
-      <a href="#s-int">내규(INT)</a>
-      <a href="#s-obl">책무(OBL)</a>
-      <a href="#s-cmp">이행점검(CMP)</a>
-      <a href="#s-apr">결재(APR)</a>
-    </nav>
-  </aside>
-  <main>
-    <div class="toolbar" role="group" aria-label="보기 옵션">
-      <!-- 열 병합 토글 제거 → 그 자리에 미리보기 버튼만 유지 -->
-      <button class="btn" data-action="preview" id="btnPreview" aria-pressed="true">미리보기 ON</button>
-    </div>
+<header>
+<h1>AML Solution 작업 리스트</h1>
+<div>최신화: <b>2025-11-05</b> · 진행 <span id="total">0</span>/<span id="done">0</span> = <span id="percent">0%</span></div>
+</header>
+<aside>
+<p>섹션</p>
+<nav class="nav" id="sideNav">
+<a href="#s-common">공통</a>
+<a href="#s-main">메인</a>
+<a href="#s-std">기준정보(STD)</a>
+<a href="#s-law">법령(LAW)</a>
+<a href="#s-int">내규(INT)</a>
+<a href="#s-obl">책무(OBL)</a>
+<a href="#s-cmp">이행점검(CMP)</a>
+<a href="#s-apr">결재(APR)</a>
+</nav>
+</aside>
+<main>
+<div aria-label="보기 옵션" class="toolbar" role="group">
 
-    <!-- 1) COMMON: sample1, sample2 (path = CM/sample) -->
-    <section class="section" id="s-common" data-code="">
-      <h2>공통 및 샘플 <span class="badge">COMMON</span></h2>
-      <table class="grid js-pub">
-        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>sample</td><td></td><td>sample 1</td><td>CM/sample</td><td><a href="#">sample1</a></td><td></td><td></td></tr>
-          <tr><td></td><td>sample</td><td></td><td>sample 2</td><td>CM/sample</td><td><a href="#">sample2</a></td><td></td><td></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 2) MAIN: sample3, sample4 (path = 빈칸) -->
-    <section class="section" id="s-main" data-code="MAIN">
-      <h2>메인 <span class="badge">MAIN</span></h2>
-      <table class="grid js-pub js-count">
-        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>sample</td><td></td><td>sample 3</td><td></td><td><a href="#">sample3</a></td><td></td><td></td></tr>
-          <tr><td></td><td>sample</td><td></td><td>sample 4</td><td></td><td><a href="#">sample4</a></td><td></td><td></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 3) STD/DT: sample5, sample6 (path = DT) -->
-    <section class="section" id="s-std" data-code="STD">
-      <h2>기준정보관리 <span class="badge">STD</span></h2>
-      <table class="grid js-pub js-count">
-        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>sample</td><td></td><td>sample 5</td><td>DT</td><td><a href="#">sample5</a></td><td></td><td></td></tr>
-          <tr><td></td><td>sample</td><td></td><td>sample 6</td><td>DT</td><td><a href="#">sample6</a></td><td></td><td></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 4) LAW/LG: sample7, sample8 (path = LG) -->
-    <section class="section" id="s-law" data-code="LAW">
-      <h2>법령관리 <span class="badge">LAW</span></h2>
-      <table class="grid js-pub js-count">
-        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>sample</td><td></td><td>sample 7</td><td>LG</td><td><a href="#">sample7</a></td><td></td><td></td></tr>
-          <tr><td></td><td>sample</td><td></td><td>sample 8</td><td>LG</td><td><a href="#">sample8</a></td><td></td><td></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 5) INT/CN: sample9, sample10 (path = CN) -->
-    <section class="section" id="s-int" data-code="INT">
-      <h2>기업내규관리 <span class="badge">INT</span></h2>
-      <table class="grid js-pub js-count">
-        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>sample</td><td></td><td>sample 9</td><td>CN</td><td><a href="#">sample9</a></td><td></td><td></td></tr>
-          <tr><td></td><td>sample</td><td></td><td>sample 10</td><td>CN</td><td><a href="#">sample10</a></td><td></td><td></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 6) OBL/DS: sample11, sample12 (path = DS) -->
-    <section class="section" id="s-obl" data-code="OBL">
-      <h2>책무정보관리 <span class="badge">OBL</span></h2>
-      <table class="grid js-pub js-count">
-        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>sample</td><td></td><td>sample 11</td><td>DS</td><td><a href="#">sample11</a></td><td></td><td></td></tr>
-          <tr><td></td><td>sample</td><td></td><td>sample 12</td><td>DS</td><td><a href="#">sample12</a></td><td></td><td></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 7) CMP: sample13 (path = 빈칸) -->
-    <section class="section" id="s-cmp" data-code="CMP">
-      <h2>이행점검관리 <span class="badge">CMP</span></h2>
-      <table class="grid js-pub js-count">
-        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>sample</td><td></td><td>sample 13</td><td></td><td><a href="#">sample13</a></td><td></td><td></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 8) APR: sample14 (path = 빈칸) -->
-    <section class="section" id="s-apr" data-code="APR">
-      <h2>결재관리 <span class="badge">APR</span></h2>
-      <table class="grid js-pub js-count">
-        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>sample</td><td></td><td>sample 14</td><td></td><td><a href="#">sample14</a></td><td></td><td></td></tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
+<button aria-pressed="true" class="btn" data-action="preview">미리보기 ON</button>
+</div>
+<section class="section" data-code="" id="s-common">
+<h2>공통 및 샘플 <span class="badge">COMMON</span></h2>
+<table class="grid js-pub">
+<thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+<tbody>
+<tr><td></td><td>sample</td><td></td><td>sample 1</td><td>../../</td><td><a href="#">guide</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>sample 2</td><td>CM/util</td><td><a href="#">px_converter</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>변수 COPY</td><td>CM/util</td><td><a href="#">copy</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>팝업 샘플</td><td>CM/sample</td><td><a href="#">_popup</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>alert 페이지</td><td>CM/sample</td><td><a href="#">_alert</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>로딩 페이지</td><td>CM/sample</td><td><a href="#">_loading</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>버튼 샘플</td><td>CM/sample</td><td><a href="#">_button</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>페이지 샘플</td><td>CM/sample</td><td><a href="#">_page</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>조회페이지 샘플</td><td>CM/sample</td><td><a href="#">_search</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>에러 페이지</td><td>CM/sample</td><td><a href="#">_err</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-code="MAIN" id="s-main">
+<h2>메인 <span class="badge">MAIN</span></h2>
+<table class="grid js-pub js-count">
+<thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+<tbody>
+<tr><td></td><td>sample</td><td></td><td>sample 3</td><td></td><td><a href="#">MAIN</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>sample 4</td><td></td><td><a href="#">LOGIN</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>비밀번호찾기</td><td></td><td><a href="#">PASSWORD</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-code="STD" id="s-std">
+<h2>기준정보관리 <span class="badge">STD</span></h2>
+<table class="grid js-pub js-count">
+<thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+<tbody>
+<tr><td></td><td>sample</td><td></td><td>sample 5</td><td>DT</td><td><a href="#">STDDT400M01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>sample 6</td><td>DT</td><td><a href="#">STDDT400R01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무등록</td><td>DT</td><td><a href="#">STDDT400C01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무수정</td><td>DT</td><td><a href="#">STDDT400U01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>변경이력</td><td>DT</td><td><a href="#">STDDT400P01</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-code="LAW" id="s-law">
+<h2>법령관리 <span class="badge">LAW</span></h2>
+<table class="grid js-pub js-count">
+<thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+<tbody>
+<tr><td></td><td>sample</td><td></td><td>sample 7</td><td>LG</td><td><a href="#">LAWLG100M01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>sample 8</td><td>LG</td><td><a href="#">LAWLG100R01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>법령 변경사항 비교</td><td>LG</td><td><a href="#">LAWLG100P01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>위험도 분석결과</td><td>LG</td><td><a href="#">LAWLG100P02</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>변경이력</td><td>LG</td><td><a href="#">LAWLG100P03</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-code="INT" id="s-int">
+<h2>기업내규관리 <span class="badge">INT</span></h2>
+<table class="grid js-pub js-count">
+<thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+<tbody>
+<tr><td></td><td>sample</td><td></td><td>sample 9</td><td>CN</td><td><a href="#">INTCN100M01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>sample 10</td><td>CN</td><td><a href="#">INTCN100R01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>기업내규 등록</td><td>CN</td><td><a href="#">INTCN100C01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>기업내규 수정</td><td>CN</td><td><a href="#">INTCN100U01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>변경이력</td><td>CN</td><td><a href="#">INTCN100P01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>기업매뉴얼</td><td>MN</td><td><a href="#">INTMN200M01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>기업매뉴얼 상세조회</td><td>MN</td><td><a href="#">INTMN200R01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>기업매뉴얼 등록</td><td>MN</td><td><a href="#">INTMN200C01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>기업매뉴얼 수정</td><td>MN</td><td><a href="#">INTMN200U01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>변경이력</td><td>MN</td><td><a href="#">INTMN200P01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>기업내규적합성분석</td><td>CF</td><td><a href="#">INTCF300M01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>상세분석</td><td>CF</td><td><a href="#">INTCF300P01</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-code="OBL" id="s-obl">
+<h2>책무정보관리 <span class="badge">OBL</span></h2>
+<table class="grid js-pub js-count">
+<thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+<tbody>
+<tr><td></td><td>sample</td><td></td><td>책무구조도관리</td><td>DS</td><td><a href="#">OBLDS100M01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무구조도 상세조회</td><td>DS</td><td><a href="#">OBLDS100R01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무구조도 등록</td><td>DS</td><td><a href="#">OBLDS100C01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무구조도 수정</td><td>DS</td><td><a href="#">OBLDS100U01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무구조도 역할표 상세보기</td><td>DS</td><td><a href="#">OBLDS100P01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무구조도 변경사항 비교</td><td>DS</td><td><a href="#">OBLDS100P02</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>변경이력</td><td>DS</td><td><a href="#">OBLDS100P03</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무/책무역할 정보 상세보기</td><td>DS</td><td><a href="#">OBLDS110P01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무기술서</td><td>DC</td><td><a href="#">OBLDC300M01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무기술서 상세조회</td><td>DC</td><td><a href="#">OBLDC300R01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무기술서 등록</td><td>DC</td><td><a href="#">OBLDC300C01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무기술서 수정</td><td>DC</td><td><a href="#">OBLDC300U01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>책무기술서 변경사항 비교</td><td>DC</td><td><a href="#">OBLDC300P01</a></td><td></td><td></td></tr>
+<tr><td></td><td>sample</td><td></td><td>변경이력</td><td>DC</td><td><a href="#">OBLDC300P02</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-code="CMP" id="s-cmp">
+<h2>이행점검관리 <span class="badge">CMP</span></h2>
+<table class="grid js-pub js-count">
+<thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+<tbody><tr><td></td><td>sample</td><td></td><td></td><td></td><td><a href="#"></a></td><td></td><td></td></tr></tbody>
+</table>
+</section>
+<section class="section" data-code="APR" id="s-apr">
+<h2>결재관리 <span class="badge">APR</span></h2>
+<table class="grid js-pub js-count">
+<thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+<tbody><tr><td></td><td>sample</td><td></td><td></td><td></td><td><a href="#"></a></td><td></td><td></td></tr></tbody>
+</table>
+</section>
+</main>
 </div>
 <script>
-  (function(){
-    var h1=document.querySelector('header h1');
-    if(h1){
-      var t=document.title.split('·')[0]||'';
-      h1.textContent=(t||'').trim()||'AML Solution 작업 리스트';
-    }
-  })();
+  (function(){var h1=document.querySelector('header h1');if(h1){var t=document.title.split('·')[0]||'';h1.textContent=(t||'').trim()||'AI Solution 작업 리스트';}})();
 </script>
-<script type="module" src="./js/main.js"></script>
+<script src="./js/main.js" type="module"></script>
 </body>
 </html>
