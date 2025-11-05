@@ -34,8 +34,20 @@
 <div class="layout">
   <header>
     <h1>AML Solution 작업 리스트</h1>
-    <div>최신화 날짜: <b>2025-11-05</b> · 진행 <span id="total">0</span>/<span id="done">0</span> = <span id="percent">0%</span></div>
+
+    <!-- 오른쪽 정보 영역: “최신화 날짜 …” 위줄 / “상태: …” 아래줄 -->
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+      <div>최신화 날짜: <b>2025-11-05</b> · 진행 <span id="total">0</span>/<span id="done">0</span> = <span id="percent">0%</span></div>
+      <div aria-label="상태 표시" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="color:#1f2937;font-weight:600">상태:</span>
+        <span style="display:inline-block;padding:6px 10px;border-radius:8px;background:#87A2C5;color:#fff;border:1px solid #87A2C5;">작업예정</span>
+        <span style="display:inline-block;padding:6px 10px;border-radius:8px;background:#E6E6FA;color:#111;border:1px solid #E6E6FA;">보류</span>
+        <span style="display:inline-block;padding:6px 10px;border-radius:8px;background:#6A6CF7;color:#fff;border:1px solid #6A6CF7;">완료</span>
+        <span style="display:inline-block;padding:6px 10px;border-radius:8px;background:#FFB81C;color:#111;border:1px solid #FFB81C;">수정</span>
+      </div>
+    </div>
   </header>
+
   <aside>
     <p>섹션</p>
     <nav class="nav" id="sideNav">
@@ -49,20 +61,11 @@
       <a href="#s-apr">결재(APR)</a>
     </nav>
   </aside>
+
   <main>
     <div class="toolbar" role="group" aria-label="보기 옵션">
-      <!-- 열 병합 토글 버튼 제거된 상태 -->
+      <!-- 열 병합 토글 제거: 미리보기 버튼만 유지 -->
       <button class="btn" data-action="preview" aria-pressed="true">미리보기 ON</button>
-
-      <!-- 상태 버튼들: 인라인 스타일만 추가(스타일시트는 수정하지 않음) -->
-      <button class="btn" data-status="planned"
-              style="background:#87A2C5;color:#fff;border-color:#87A2C5">작업예정</button>
-      <button class="btn" data-status="onhold"
-              style="background:#E6E6FA;color:#111;border-color:#E6E6FA">보류</button>
-      <button class="btn" data-status="done"
-              style="background:#6A6CF7;color:#fff;border-color:#6A6CF7">완료</button>
-      <button class="btn" data-status="edit"
-              style="background:#FFB81C;color:#111;border-color:#FFB81C">수정</button>
     </div>
 
     <section class="section" id="s-common" data-code="">
