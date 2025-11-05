@@ -1,58 +1,40 @@
+function buildHref(sectionCode, pathText, urlText){
+  const txt  = (urlText||'').trim();
+  const path = (pathText||'').trim();
+  const code = (sectionCode||'').trim();
+  if (!txt) return '';
+  const mid = path ? `${path}/` : '';
+  return `page/${code}/${mid}${txt}.html`;
+}
 
-// app.table.js — keep original look; only compute hrefs + counters
 export function configureTables(){
-  // Build hrefs from table cells, keeping original DOM
-  document.querySelectorAll('.pub_list').forEach(tbl=>{
-    tbl.querySelectorAll('tbody tr').forEach(tr=>{
+  // URL 만들기 (모양/구조 변경 없음)
+  document.querySelectorAll('.section').forEach(section=>{
+    const code  = section.dataset.code || '';     // 섹션별 코드(data-code에 들어있음)
+    const table = section.querySelector('table.grid');
+    if (!table) return;
+    [...table.tBodies[0].rows].forEach(tr=>{
       const tds = tr.cells;
-      if (!tds || tds.length < 6) return;
-      const pathCell = tds[4];
-      const urlCell  = tds[5];
-      const a = urlCell ? urlCell.querySelector('a') : null;
+      const pathCell = tds[4]; // 원본 테이블에서 path 열이 5번째
+      const urlCell  = tds[5]; // URL 열이 6번째
+      const a = urlCell?.querySelector('a');
       if (!a) return;
-      const urlText  = (a.textContent || "").trim();
-      const pathText = (pathCell.textContent || "").trim();
-      // find section code from nearest heading (same as original)
-      let code = "";
-      const section = tr.closest('.section');
-      if (section){
-        const span = section.querySelector('.tit2 span');
-        if (span) code = (span.textContent || "").trim();
+      const href = buildHref(code, pathCell?.textContent, a.textContent);
+      if (href) {
+        a.href = href;
+        a.target = '_blank';
+        a.title = '새창열림';
       }
-      const href = buildHref(code, pathText, urlText);
-      if (!href) return;
-      a.setAttribute("href", href);
-      a.setAttribute("target", "_blank");
-      a.setAttribute("title", "새창열림");
     });
   });
 
-  // progress counter (same visual spots as original)
-  const countRows = [...document.querySelectorAll('.count_list tbody tr')];
-  const notCount = countRows.filter(tr => tr.classList.contains('not') || tr.classList.contains('hold')).length;
-  const doneCount = countRows.filter(tr => tr.classList.contains('done') || tr.classList.contains('edit')).length;
-  const total = countRows.length - notCount;
-  const percentage = total ? (doneCount / total) * 100 : 0;
-  const wrap = document.querySelector('.info_zone .progress');
-  if (wrap){
-    const totalEl = wrap.querySelector('.total'); if (totalEl) totalEl.textContent = total;
-    const pageEl  = wrap.querySelector('.page');  if (pageEl)  pageEl.textContent  = doneCount;
-    const perEl   = wrap.querySelector('.percent'); if (perEl) perEl.textContent = percentage.toFixed(2) + '%';
-  }
+  // 진행률 (row-muted/row-hold 제외, row-done/row-edit만 완료로 카운트)
+  const rows = [...document.querySelectorAll('.js-count tbody tr')];
+  const done  = rows.filter(tr => tr.classList.contains('row-done') || tr.classList.contains('row-edit')).length;
+  const total = rows.filter(tr => !tr.classList.contains('row-muted') && !tr.classList.contains('row-hold')).length;
+  const percent = total ? ((done/total)*100).toFixed(2) : '0.00';
+  const set = (id,val)=>{ const n=document.getElementById(id); if(n) n.textContent = val; };
+  set('done', done); set('total', total); set('percent', `${percent}%`);
 
-  // announce for preview installer
   document.dispatchEvent(new CustomEvent('tables:rebuilt'));
-}
-
-function buildHref(sectionCode, pathText, urlText){
-  const txt = (urlText || '').trim();
-  const path = (pathText || '').trim();
-  const code = (sectionCode || '').trim();
-  if (!txt) return '';
-  if (!code) {
-    if (path === '../../') return `${path}${txt}.html`;
-    return `page/${path}/${txt}.html`;
-  }
-  const mid = path ? `${path}/` : '';
-  return `page/${code}/${mid}${txt}.html`;
 }
