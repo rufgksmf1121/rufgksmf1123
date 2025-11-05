@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <title>AML Solution 작업 리스트</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <style>
+      :root{--body-min-width:1280px;--layout-height:56px;--spacing-xl:32px;--spacing-lg:24px;--spacing:16px;--spacing-md:8px;--spacing-sm:4px;--font-xxl:22px;--font-xl:20px;--font-lg:18px;--font-md:16px;--font-sm:14px;--font-xs:12px;--tf-xl:56px;--tf-lg:48px;--tf-md:36px;--tf-sm:28px;--tf-xs:24px;--tf-spacing:10px;--color-default:#2b2b2b;--color-white:#ffffff;--color-gray1:#666;--color-gray2:#777;--color-gray3:#949494;--color-gray4:#b0b0b0;--color-gray5:#ddd;--color-gray6:#f5f5f5;--color-primary:#2149a6;--color-darkprimary:#243357;--color-lightprimary:#279af1;--color-red:#ff3b3b;--color-green:#01aa5e;--color-blue:#0869fc;--color-yellow:#ffcc00;--color-violet:#6e32c9;--bg-base:#f5f9ff;}
+      body{margin:0;height:auto!important;overflow:hidden}
+      .wrapper{padding:10px 20px 80px;overflow-y:auto;height:100vh;min-width:var(--body-min-width);box-sizing:border-box;scroll-behavior:smooth}
+      ul{padding:0;margin:0}ul li{list-style:none}[class*="tit"]{margin-bottom:var(--spacing-md)}
+      .tit1{font-size:var(--font-xxl);color:var(--color-primary);text-align:center}
+      .tit2{font-size:var(--font-lg);counter-increment:tit_num;position:relative;padding-top:100px;margin-top:-70px;z-index:-1}.tit2:before{content:counter(tit_num) ". ";}
+      .tit2_notCount{font-size:var(--font-lg);position:relative;padding-top:100px;margin-top:-70px;z-index:-1}
+      table.tbl{width:100%;table-layout:fixed;border-collapse:collapse;border-style:solid solid solid none;border-width:1px;border-color:var(--color-gray5);font-size:var(--font-sm)}
+      table.tbl+.tbl{margin-top:15px}table.tbl th{font-weight:600}
+      table.tbl>thead>tr>th,table.tbl>tbody>tr>th,table.tbl>tbody>tr>td,table.tbl>tfoot>tr>th,table.tbl>tfoot>tr>td{text-align:center;border-left:1px solid var(--color-gray5);border-bottom:1px solid var(--color-gray5);overflow:hidden}
+      table.tbl>thead>tr>th{padding:var(--spacing-sm) var(--spacing);line-height:1.429;color:var(--color-primary)}
+      table.tbl>tbody>tr>th,table.tbl>tbody>tr>td,table.tbl>tfoot>tr>th,table.tbl>tfoot>tr>td{padding:var(--spacing-sm) var(--spacing);color:var(--color-default)}
+      table.tbl>thead>tr>th,table.tbl>tfoot>tr>th,table.tbl>tfoot>tr>td{background:var(--bg-base)}
+      table.tbl>tbody>tr>th,table.tbl>tbody>tr>td{background:var(--color-white)}
+      table.tbl>tfoot>tr>th,table.tbl>tfoot>tr>td{border-top:1px solid var(--color-gray5)}
+      table.tbl>tbody>tr:last-child>th,table.tbl>tbody>tr:last-child>td{border-bottom:0}
+      .pub_list>tbody tr{counter-increment:list_num;line-height:1.75}
+      .pub_list>tbody tr td:first-child:before{content:counter(list_num) ". ";}
+      .pub_list>tbody tr td:nth-last-child(2){text-align:left}
+      .pub_list .done td{background-color:rgba(99,95,255,.1)}
+      .pub_list .edit td{background-color:rgba(255,180,0,.1)}
+      .pub_list .work td{background-color:rgba(127,159,249,.1)}
+      .pub_list .done.not td:last-child{background-color:rgba(134,86,245,.1);color:#a5a5a5}
+      .pub_list .done td:last-child{background-color:#635fff;color:#fff}
+      .pub_list .edit td:last-child{background-color:#ffb400;color:#fff}
+      .pub_list .work td:last-child{background-color:#7f9fcb;color:#fff}
+      .pub_list .done td:nth-last-child(2) a,.pub_list .edit td:nth-last-child(2) a,.pub_list .work td:nth-last-child(2) a{color:#fff}
+      .pub_list .not td,.pub_list .not td a,.pub_list .hold td,.pub_list .hold td a{color:#a5a5a5}
+      .pub_list a{color:#004098;text-decoration:underline}.pub_list a:visited{color:#635fff}
+      .info_zone{position:sticky;top:-10px;display:flex;justify-content:space-around;align-items:center;background-color:var(--bg-base);padding:10px 30px;z-index:100}
+      .info_zone .date{margin:10px 0 5px 0}.info_zone .date span{display:inline-block;padding-right:5px;color:var(--color-primary);font-weight:600}.info_zone .date strong{color:#635fff}
+      .info_zone ul{display:flex;align-items:center;min-width:300px}.info_zone ul::before{content:'상태 : ';padding-right:5px;color:var(--color-primary);font-weight:600;white-space:nowrap}
+      .info_zone ul.state li{padding:8px 12px;text-align:center;white-space:nowrap}
+      .info_zone ul.state li.work{background-color:#7f9fcb;color:#fff}.info_zone ul.state li.hold{background-color:rgba(134,86,245,.1)}.info_zone ul.state li.done{background-color:#635fff;color:#fff}.info_zone ul.state li.edit{background-color:#ffb400;color:#fff}
+      .info_zone .progress{color:var(--color-primary);font-weight:500}.info_zone .progress .total{color:#7f9fcb}.info_zone .progress .page{color:#8656f5;font-weight:600}.info_zone .progress .percent{color:var(--color-primary);font-weight:600}
+      .tab_menu>ul{display:inline-flex;padding:calc(var(--spacing-md)/2);border:1px solid var(--color-gray5);background-color:var(--color-gray6);border-radius:8px}.tab_menu>ul::before{display:none}
+      .tab_menu>ul>li{flex:1 1 1}.tab_menu>ul>li>a{position:relative;display:flex;align-items:center;justify-content:center;height:var(--tf-lg);padding:0 var(--spacing-md);font-size:var(--font-sm);font-weight:400;color:var(--color-gray1);letter-spacing:-.4px}
+      .tab_menu>ul>li>a.current,.tab_menu>ul>li>a:focus-visible{color:var(--color-primary);font-weight:600;border-radius:8px;background-color:#fff;box-shadow:0 0 10px 0 rgba(0,0,0,.1)}
+      .toolbar{display:flex;gap:8px;align-items:center}
+      .toolbar button{height:32px;padding:0 10px;border:1px solid var(--color-gray4);background:#fff;border-radius:6px;cursor:pointer}
+      .toolbar #btnPreview.is-on{background:#111827;color:#fff;border-color:#111827}
+    </style>
+    <script type="module" src="./js/main.js"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <h3 class="tit1">AML Solution 작업 리스트</h3>
+      <div class="info_zone">
+        <p class="date"><span>최신화 날짜:</span><strong>2025-10-31</strong></p>
+        <div class="toolbar">
+          <button id="btnPreview" class="is-on">미리보기 ON</button>
+        </div>
+        <ul class="state">
+          <li class="work">작업예정</li><li class="hold">보류</li><li class="done">완료</li><li class="edit">수정</li>
+        </ul>
+        <p class="progress">진행상황 : <span class="total"></span> / <span class="page"></span> = <span class="percent"></span></p>
+      </div>
+
+      <!-- 공통 및 샘플 (원본 표 구조 그대로) -->
+      <h4 class="tit2" id="common">공통 및 샘플(<span>COMMON</span>)</h4>
+      <table class="tbl pub_list count_list">
+        <colgroup>
+          <col style="width:60px"><col style="width:180px"><col style="width:220px"><col style="width:auto">
+          <col style="width:100px"><col style="width:200px"><col style="width:20%"><col style="width:130px">
+        </colgroup>
+        <thead>
+          <tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr>
+        </thead>
+        <tbody class="js-pub">
+          <tr><td></td><td>가이드</td><td></td><td>마크업 가이드</td><td>../../</td><td><a href="javascript:void(0);">guide</a></td><td></td><td></td></tr>
+          <tr><td></td><td>util</td><td></td><td>PX to EM Converter</td><td>CM/util</td><td><a href="javascript:void(0);">px_converter</a></td><td></td><td></td></tr>
+          <tr><td></td><td>util</td><td></td><td>변수 COPY</td><td>CM/util</td><td><a href="javascript:void(0);">copy</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>팝업 샘플</td><td>CM/sample</td><td><a href="javascript:void(0);">_popup</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>alert 페이지</td><td>CM/sample</td><td><a href="javascript:void(0);">_alert</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>로딩 페이지</td><td>CM/sample</td><td><a href="javascript:void(0);">_loading</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>버튼 샘플</td><td>CM/sample</td><td><a href="javascript:void(0);">_button</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>페이지 샘플</td><td>CM/sample</td><td><a href="javascript:void(0);">_page</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>조회페이지 샘플</td><td>CM/sample</td><td><a href="javascript:void(0);">_search</a></td><td></td><td></td></tr>
+          <tr><td></td><td>sample</td><td></td><td>에러 페이지</td><td>CM/sample</td><td><a href="javascript:void(0);">_err</a></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+
+      <h4 class="tit2" id="main">메인(<span>MAIN</span>)</h4>
+      <table class="tbl pub_list count_list">
+        <colgroup>
+          <col style="width:60px"><col style="width:180px"><col style="width:220px"><col style="width:auto">
+          <col style="width:100px"><col style="width:200px"><col style="width:20%"><col style="width:130px">
+        </colgroup>
+        <thead><tr><th>No.</th><th>2Depth</th><th>3Depth</th><th>화면명</th><th>path</th><th>URL</th><th>비고</th><th>상태</th></tr></thead>
+        <tbody class="js-pub">
+          <tr><td></td><td>메인</td><td></td><td>메인</td><td></td><td><a href="javascript:void(0);">MAIN</a></td><td></td><td></td></tr>
+          <tr><td></td><td>로그인</td><td></td><td>로그인</td><td></td><td><a href="javascript:void(0);">LOGIN</a></td><td></td><td></td></tr>
+          <tr><td></td><td>비밀번호찾기</td><td></td><td>비밀번호찾기</td><td></td><td><a href="javascript:void(0);">PASSWORD</a></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+
+      <!-- 아래 섹션 표 구조는 동일하게 유지하세요 (원본 그대로). 예제에선 생략. -->
+    </div>
+  </body>
+</html>
